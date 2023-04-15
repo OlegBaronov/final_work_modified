@@ -83,20 +83,19 @@ class YaUploader:
         # file_path = file_path_preview.get('href', '')
         headers = self.get_headers()
         self._get_path(disk_file_path)
-        'path': disk_file_path
+        #'path': disk_file_path
         for dict in path_to_file:
             for k, v in dict.items():
                 url_vk = v
                 file_name = str(f"{k}.jpg")
                 file_path = disk_file_path + '/' + file_name
-                with open(file_name, 'wb') as f:
-                    res = requests.get(url=url_vk)
-                    f.write(res.content)
-                file_upload = self._upload_preview(file_path)
-                href_upload = file_upload.get('href', '')
+                # with open(file_name, 'wb') as f:
+                #     res = requests.get(url=url_vk)
+                #     f.write(res.content)
                 params = {'path': file_path,
-                          'url':get_photos_vk_load}
-                response = requests.post(url=href_upload, headers=headers, params=params)
+                          'url': url_vk}
+                url = "https://cloud-api.yandex.net/v1/disk/resources/upload"
+                response = requests.post(url=url, headers=headers, params=params)
                 if response.status_code == 202:
                     print("Success")
 
@@ -114,19 +113,4 @@ if __name__ == '__main__':
     result = uploader.upload(disk_file_path, path_to_file)
 
 
-# This is a sample Python script.
-
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+#
